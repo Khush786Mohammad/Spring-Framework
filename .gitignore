@@ -1,0 +1,19 @@
+/.metadata/
+# Maven
+target/
+
+# Servers (Tomcat / WildFly etc.)
+Servers/
+
+# IDEs
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store

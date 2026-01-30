@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <bean name="cst" class="com.demo.spring.springcore.map.Customer">
+    	<property name="id" value="123" />
+    	<property name="product">
+    		<map>
+    			<entry key="100" value="Iphone" />
+    			<entry key="101" value="Samsung" />
+    			<entry key="102">
+    				<value>Macbook</value>
+    			</entry>
+    			<entry value="PS5">
+    				<key>
+						<value>103</value>
+					</key>
+    			</entry>
+    			<entry>
+    				<key>
+						<value>105</value>
+					</key>
+    				<value>GPU</value>
+    			</entry>
+    		</map>
+    	</property>
+    </bean>
+</beans>
