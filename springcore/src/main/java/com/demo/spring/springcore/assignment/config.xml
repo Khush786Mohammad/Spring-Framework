@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean name="bean-items1" class="com.demo.spring.springcore.assignment.Item"
+		p:id="100"
+		p:name="Pencil"
+		p:price="1.2"
+		p:quantity="45"
+	/>
+	<bean name="bean-items2" class="com.demo.spring.springcore.assignment.Item" 
+		p:id="200"
+		p:name="Eraser"
+		p:price="3.5"
+		p:quantity="15"
+	/>
+	<bean name="user1" class="com.demo.spring.springcore.assignment.ShoppingCart"
+	p:items-ref="bean-items1" />
+	
+	<bean name="user2" class="com.demo.spring.springcore.assignment.ShoppingCart">
+		<property name="items">
+			<ref bean="bean-items2" />
+		</property>
+	</bean>
+	<bean name="user3" class="com.demo.spring.springcore.assignment.ShoppingCart">
+		<property name="items" ref="bean-items1" />
+	</bean>
+</beans>
