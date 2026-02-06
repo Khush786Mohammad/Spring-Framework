@@ -1,7 +1,5 @@
 package com.demo.spring.springcore.constructorInjection;
 
-import org.springframework.beans.factory.annotation.Required;
-
 public class Employee {
 	private int id;
 	private Address address;
