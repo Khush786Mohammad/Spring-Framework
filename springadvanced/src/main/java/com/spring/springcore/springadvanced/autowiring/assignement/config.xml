@@ -7,21 +7,21 @@
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
-
-	<bean name="address1" class="com.spring.springcore.springadvanced.autowiring.annotation.Address"
-		p:houseno="123"
-		p:street="Sector"
-		p:city="Gandhinagar"
-	>
-	</bean>
+    
+    <bean name="reservation" class="com.spring.springcore.springadvanced.autowiring.assignement.Reservation">
+    	<property name="id" value="123" />
+    	<property name="time" value="12" />
+    </bean>
+    <!-- 
+    <bean name="customer1" class="com.spring.springcore.springadvanced.autowiring.assignement.Customer" 
+    	p:name="Khush"
+    	autowire="byType"
+    />
+	-->
+	<bean name="customer1" class="com.spring.springcore.springadvanced.autowiring.assignement.Customer" 
+    	p:name="Khush"
+    />
 	
-	<bean name="address2" class="com.spring.springcore.springadvanced.autowiring.annotation.Address"
-		p:houseno="456"
-		p:street="Sector 3"
-		p:city="Gandhinagar"
-	>
-	</bean>
-	<bean name="employee" class="com.spring.springcore.springadvanced.autowiring.annotation.Employee"
-	/>
-	<context:annotation-config></context:annotation-config>
+    
+    <context:annotation-config />
 </beans>
