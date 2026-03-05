@@ -10,12 +10,18 @@ import org.springframework.stereotype.Component;
 @Component("mentor")
 @Scope("prototype")
 public class Instructor {
-	@Value("2812573")
+//	@Value("281")
+//	@Value("#{66+44}")
+	@Value("#{T(java.lang.Integer).MIN_VALUE}")
 	int id;
-	@Value("Khush Mohammad")
+//	@Value("Khush Mohammad")
+	@Value("#{'Khush'.toUpperCase()}")
 	String name;
 	@Value("#{subject}")
 	List<String> subjects;
+	
+	@Value("#{2+4>5}")
+	private boolean active;
 
 	@Autowired
 	private Departments deparmtents;
@@ -55,12 +61,11 @@ public class Instructor {
 
 	@Override
 	public String toString() {
-		return "Instructor [id=" + id + ", name=" + name + ", subjects=" + subjects + ", deparmtents=" + deparmtents
-				+ "]";
+		return "Instructor [id=" + id + ", name=" + name + ", subjects=" + subjects + ", active=" + active
+				+ ", deparmtents=" + deparmtents + "]";
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
-
 }
