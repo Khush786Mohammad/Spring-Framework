@@ -3,6 +3,8 @@ package com.spring.springcore.springjdbc.employee.entity;
 public class Employee {
 	private int id;
 	private String firstname;
+	private String lastname;
+
 	public int getId() {
 		return id;
 	}
@@ -19,9 +21,6 @@ public class Employee {
 		this.lastname = lastname;
 	}
 
-
-	private String lastname;
-
 	public String getFirstname() {
 		return firstname;
 	}
@@ -29,7 +28,6 @@ public class Employee {
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
-
 
 	@Override
 	public String toString() {
