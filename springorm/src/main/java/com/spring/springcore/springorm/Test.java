@@ -15,9 +15,13 @@ public class Test {
 		product.setId(1);
 		product.setName("Iphone 17");
 		product.setDesc("Expensive");
-		product.setPrice(98000);
+		product.setPrice(70000);
 
-		System.out.println(obj.create(product));
+//		System.out.println(obj.create(product));
+//		obj.update(product);
+//		obj.delete(product);
+
+//		System.out.println(obj.fetchProductById(1));
+		System.out.println(obj.fetchProducts());
 	}
-
 }
