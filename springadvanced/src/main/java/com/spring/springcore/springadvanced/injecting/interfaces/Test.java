@@ -8,7 +8,7 @@ public class Test {
 	public static void main(String[] args) {
 
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(
-				"com/spring/springcore/springadvanced/injecting/interfaces/config.xml");
+				"com/spring/springcore/springadvanced/injecting/interfaces/config2.xml");
 
 		OrderBO bo = (OrderBO) ctx.getBean("orderBO");
 
