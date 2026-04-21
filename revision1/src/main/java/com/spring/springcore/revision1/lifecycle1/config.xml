@@ -7,7 +7,7 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
     
-    <bean name="employees" class="com.spring.springcore.revision1.lifecycle.Employee"
+    <bean name="employees" class="com.spring.springcore.revision1.lifecycle1.Employee"
     	p:id="2812573"
     	p:name="khush"
     	p:YoE="1"

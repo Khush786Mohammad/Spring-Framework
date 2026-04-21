@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config />
+
+	<bean name="subject"
+		class="com.spring.springcore.revision1.references.Subject"
+		p:subjectId="402" p:name="Automata" />
+
+	<bean name="student1"
+		class="com.spring.springcore.revision1.references.Student" p:id="2094"
+		p:name="Khush Mohammad">
+		<property name="subjects">
+			<ref bean="subject" />
+		</property>
+	</bean>
+
+	<bean name="student2"
+		class="com.spring.springcore.revision1.references.Student" p:id="2094"
+		p:name="Mahesh">
+		<property name="subjects" ref="subject" />
+	</bean>
+
+	<bean name="student3"
+		class="com.spring.springcore.revision1.references.Student" p:id="2094"
+		p:name="John Cena"
+		p:subjects-ref="subject"
+		/>
+</beans>
