@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+	<bean name="processor"
+		class="com.spring.springcore.revision1.constructorInjection.Processor">
+
+		<constructor-arg value="3" />
+		<constructor-arg value="Snapdragon 7" />
+	</bean>
+
+	<bean name="phone"
+		class="com.spring.springcore.revision1.constructorInjection.Phone">
+
+		<constructor-arg value="X678-Y987-ZY34-MN1O" />
+		<constructor-arg value="Samsung S25" />
+		<constructor-arg value="1" />
+		<constructor-arg>
+			<ref bean="processor" />
+		</constructor-arg>
+	</bean>
+
+	<bean name="bionicChips"
+		class="com.spring.springcore.revision1.constructorInjection.Processor">
+
+		<constructor-arg value="2" />
+		<constructor-arg value="A18" />
+	</bean>
+
+	<bean name="iphone"
+		class="com.spring.springcore.revision1.constructorInjection.Phone">
+
+		<constructor-arg value="GHJKLKJHGHJK" />
+		<constructor-arg value="Iphone 17 Air" />
+		<constructor-arg value="2" />
+		<constructor-arg ref="bionicChips" />
+	</bean>
+
+	<bean name="iphoneAir"
+		class="com.spring.springcore.revision1.constructorInjection.Phone"
+		c:iemi="86X789X" c:name="Iphone Air" c:waranty="1"
+		c:processor-ref="bionicChips" />
+
+	<context:annotation-config></context:annotation-config>
+</beans>
