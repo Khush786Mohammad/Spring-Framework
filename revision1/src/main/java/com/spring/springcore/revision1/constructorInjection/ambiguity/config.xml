@@ -20,5 +20,10 @@
 			c:name="John"
 			c:salary="4200"
 		/>
+		
+	<bean name="student" class="com.spring.springcore.revision1.constructorInjection.ambiguity.Student">
+		<constructor-arg value="123" name="intId"/>
+		<constructor-arg value="19" name="intAge" />
+	</bean>
 	<context:annotation-config></context:annotation-config>
 </beans>

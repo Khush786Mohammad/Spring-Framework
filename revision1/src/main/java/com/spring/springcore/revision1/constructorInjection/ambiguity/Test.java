@@ -10,6 +10,8 @@ public class Test {
 				"com/spring/springcore/revision1/constructorInjection/ambiguity/config.xml");
 		Employee employee = (Employee) ctx.getBean("employee");
 		System.out.println(employee);
+
+		Student stdStudent = (Student) ctx.getBean("student");
 		ctx.close();
 	}
 }
