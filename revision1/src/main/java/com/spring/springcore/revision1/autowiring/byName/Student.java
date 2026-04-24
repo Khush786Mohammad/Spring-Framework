@@ -1,10 +1,5 @@
-package com.spring.springcore.revision1.autowiring.byType;
+package com.spring.springcore.revision1.autowiring.byName;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
 
 public class Student {
@@ -17,7 +12,6 @@ public class Student {
 		return id;
 	}
 
-	@Required
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -41,9 +35,9 @@ public class Student {
 	public Subject getSubj() {
 		return subj;
 	}
-
+	
 	@Required
-	public void setSubj(Subject subj) {
+	public void setVishya(Subject subj) {
 		this.subj = subj;
 	}
 
@@ -52,13 +46,4 @@ public class Student {
 		return "Student [id=" + id + ", name=" + name + ", age=" + age + ", subj=" + subj + "]";
 	}
 
-	@PostConstruct
-	public void start() {
-		System.out.println("Bean has been initialized");
-	}
-
-	@PreDestroy
-	public void destroy() {
-		System.out.println("Bean is ready to destroy");
-	}
 }

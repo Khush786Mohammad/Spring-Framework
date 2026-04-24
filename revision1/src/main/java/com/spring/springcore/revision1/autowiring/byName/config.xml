@@ -11,8 +11,8 @@
 
 	<context:annotation-config />
 
-	<bean name="subject"
-		class="com.spring.springcore.revision1.autowiring.byType.Subject">
+	<bean name="vishya"
+		class="com.spring.springcore.revision1.autowiring.byName.Subject">
 		<constructor-arg value="201" type="int" index="0"
 			name="id" />
 		<constructor-arg value="DAA" type="String" index="1"
@@ -20,6 +20,6 @@
 	</bean>
 
 	<bean name="student"
-		class="com.spring.springcore.revision1.autowiring.byType.Student"
-		autowire="byType" p:id="2094" p:name="Khush Mohammad" p:age="25" />
+		class="com.spring.springcore.revision1.autowiring.byName.Student"
+		p:id="2094" p:name="Khush Mohammad" p:age="25" autowire="byName" />
 </beans>
