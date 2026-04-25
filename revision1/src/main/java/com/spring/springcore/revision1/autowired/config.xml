@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean name="product"
+		class="com.spring.springcore.revision1.autowired.Product" p:pId="123"
+		p:pName="Iphone 17" p:pDesc="Brand new iphone with A18 Bionic Chip" />
+
+	<bean name="order"
+		class="com.spring.springcore.revision1.autowired.Order" p:orderId="98"
+		scope="prototype" />
+
+	<bean name="inv"
+		class="com.spring.springcore.revision1.autowired.Inventory">
+		<constructor-arg value="123" name="id" />
+		<constructor-arg value="45" name="quantity" />
+	</bean>
+
+	<bean name="inv2"
+		class="com.spring.springcore.revision1.autowired.Inventory">
+		<constructor-arg value="33" name="id" />
+		<constructor-arg value="25" name="quantity" />
+	</bean>
+
+	<bean name="war"
+		class="com.spring.springcore.revision1.autowired.Warehouse" p:id="89"
+		p:address="Gandhinagar" />
+
+	<context:annotation-config />
+</beans>
