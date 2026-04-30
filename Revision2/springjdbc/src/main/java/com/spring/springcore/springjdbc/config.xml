@@ -16,7 +16,7 @@
 	<bean name="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 		p:driverClassName="com.mysql.jdbc.Driver"
-		p:url="jdbc:mysql://localhost/springdb" p:username="root"
+		p:url="jdbc:mysql://localhost:3306/springdb" p:username="root"
 		p:password="Neymarjr.10" />
 
 	<bean name="jdbcTemplate"
