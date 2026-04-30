@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.spring.springcore.springjavaconfig" />
+	
+	<bean name="processor" class="com.spring.springcore.springjavaconfig.Processor" 
+		p:name="Snapdragon 7"
+		p:gen="4"
+		p:type="Nano Processor"
+		lazy-init="true"
+	/>
+	
+	<bean name="processor2" class="com.spring.springcore.springjavaconfig.Processor" 
+		p:name="Snapdragon 8"
+		p:gen="3"
+		p:type="Nano Processor"
+	/>
+	
+	<bean name="computer" class="com.spring.springcore.springjavaconfig.Computer" 
+		p:name="Dell i7"
+	
+	/>
+	
+</beans>
