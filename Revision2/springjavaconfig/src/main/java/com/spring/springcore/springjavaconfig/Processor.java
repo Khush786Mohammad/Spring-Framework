@@ -1,13 +1,16 @@
 package com.spring.springcore.springjavaconfig;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Processor {
 	private String name;
 	private int gen;
 	private String type;
 	
-//	public Processor() {
-//		System.out.println("Processor is initialized");
-//	}
+	public Processor() {
+		System.out.println("Processor is initialized");
+	}
 
 	public String getName() {
 		return name;

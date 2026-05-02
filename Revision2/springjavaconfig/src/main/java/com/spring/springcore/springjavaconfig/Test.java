@@ -5,9 +5,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class Test {
 	public static void main(String[] args) {
-		ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfig.class);
-		Processor processor = (Processor) ctx.getBean(Processor.class);
-//		System.out.println(processor);
-		
+		ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+		Processor p1 = context.getBean("appleChip", Processor.class);
 	}
 }

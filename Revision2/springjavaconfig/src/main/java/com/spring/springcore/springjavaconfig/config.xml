@@ -10,8 +10,6 @@
     http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<context:annotation-config />
-	<context:component-scan base-package="com.spring.springcore.springjavaconfig" />
-	
 	<bean name="processor" class="com.spring.springcore.springjavaconfig.Processor" 
 		p:name="Snapdragon 7"
 		p:gen="4"
@@ -20,14 +18,13 @@
 	/>
 	
 	<bean name="processor2" class="com.spring.springcore.springjavaconfig.Processor" 
-		p:name="Snapdragon 8"
-		p:gen="3"
-		p:type="Nano Processor"
+		p:name="A18 Bionic Chip"
+		p:gen="1"
+		p:type="Bionic Chip"
 	/>
 	
 	<bean name="computer" class="com.spring.springcore.springjavaconfig.Computer" 
 		p:name="Dell i7"
-	
 	/>
 	
 </beans>
