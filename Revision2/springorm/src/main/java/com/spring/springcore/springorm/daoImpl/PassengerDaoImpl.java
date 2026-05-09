@@ -32,7 +32,9 @@ public class PassengerDaoImpl implements PassengerDao {
 	@Override
 	@Transactional("txManager")
 	public void deletePassenger(int p1) {
-		hibernateTemplate.delete(p1);
+		Passenger passenger = getPassengerById(p1);
+		if(passenger != null)
+			hibernateTemplate.delete(passenger);
 	}
 
 	@Override
