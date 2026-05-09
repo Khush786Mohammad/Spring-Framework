@@ -1,18 +1,26 @@
 package com.spring.springcore.springmvcEx.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Student")
 public class Student {
+	@Id
+	@Column(name = "id")
 	private int id;
+	
+	@Column(name="name")
 	private String name;
+	
+	@Column(name="email")
 	private String email;
+	
+	@Column(name="course")
 	private String course;
 
-	public Student(int id, String name, String email, String course) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.course = course;
-	}
 
 	public int getId() {
 		return id;

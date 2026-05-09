@@ -65,6 +65,23 @@ tr:hover {
 .btn:hover {
 	background: #574bdb;
 }
+
+.delete-btn{
+    background: crimson;
+    color: white;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 6px;
+    margin-right: 8px;
+}
+
+.update-btn{
+    background: #2196F3;
+    color: white;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 6px;
+}
 </style>
 </head>
 
@@ -81,6 +98,7 @@ tr:hover {
 				<th>Name</th>
 				<th>Email</th>
 				<th>Course</th>
+				<th>Actions</th>
 			</tr>
 
 			<%
@@ -94,6 +112,10 @@ tr:hover {
 				<td><%=student.getName()%></td>
 				<td><%=student.getEmail()%></td>
 				<td><%=student.getCourse()%></td>
+				<td>
+					<a href="deleteStudent/<%=student.getId() %>" class="delete-btn">Delete</a>
+					<a href="updateStudent/<%=student.getId() %>" class="update-btn">Update</a>
+				</td>
 			</tr>
 
 			<%
