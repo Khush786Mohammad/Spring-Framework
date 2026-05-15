@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,8 +15,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/admin")
 public class HelloController {
+	
+	@GetMapping("/csrf-token")
+	public CsrfToken getCsrfToken(HttpServletRequest req, HttpServletResponse res) {
+		CsrfToken token = (CsrfToken) req.getAttribute("_csrf");
+		Cookie cookie = new Cookie("csrf-token", token.getToken());
+		cookie.setMaxAge(60*60);
+		res.addCookie(cookie);
+		return token;
+	}
 
 	@GetMapping("/hello")
 	public String sayHello(HttpServletRequest req) {
@@ -41,18 +51,12 @@ public class HelloController {
 		if (cookies == null)
 			return "No Cookies Found";
 
-		String username = Arrays.stream(cookies)
-				.filter(cookie -> cookie.getName().equalsIgnoreCase("username"))
-				.map(Cookie::getValue)
-				.findFirst()
-				.orElse("Username cookie not found");
-		
-		String password = Arrays.stream(cookies)
-				.filter(cookie -> cookie.getName().equalsIgnoreCase("password"))
-				.map(Cookie::getValue)
-				.findFirst()
-				.orElse("Invalid Password");
-				
-		return username+ " " + password;
+		String username = Arrays.stream(cookies).filter(cookie -> cookie.getName().equalsIgnoreCase("username"))
+				.map(Cookie::getValue).findFirst().orElse("Username cookie not found");
+
+		String password = Arrays.stream(cookies).filter(cookie -> cookie.getName().equalsIgnoreCase("password"))
+				.map(Cookie::getValue).findFirst().orElse("Invalid Password");
+
+		return username + " " + password;
 	}
 }
