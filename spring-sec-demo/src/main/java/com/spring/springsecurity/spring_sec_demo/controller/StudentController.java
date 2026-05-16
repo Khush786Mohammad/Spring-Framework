@@ -18,7 +18,6 @@ public class StudentController {
 	
 	@GetMapping("/fetch-students")
 	public List<Student> fetchStudents(){
-		System.out.println("Student is fetched"+ this.students);
 		return students;
 	}
 	
