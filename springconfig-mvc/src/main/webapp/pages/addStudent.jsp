@@ -97,7 +97,7 @@ input:focus {
 		<h1>Add Student</h1>
 
 		<form action="saveStudent" method="post">
-
+		
 			<div class="form-group">
 				<label>Student ID</label> <input type="number" name="id"
 					placeholder="Enter student id" required>

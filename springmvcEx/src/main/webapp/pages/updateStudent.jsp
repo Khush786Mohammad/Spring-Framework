@@ -157,7 +157,7 @@ language="java" isELIgnored="false" %>
 
     </form>
 
-    <a href="<%=request.getContextPath()%>/viewStudents" class="back-btn">
+    <a href="<%=request.getContextPath()%>/viewStudent" class="back-btn">
        ⬅ Back to Student List
 
     </a>
