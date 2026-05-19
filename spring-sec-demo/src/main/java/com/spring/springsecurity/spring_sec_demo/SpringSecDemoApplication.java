@@ -10,4 +10,3 @@ public class SpringSecDemoApplication {
 		SpringApplication.run(SpringSecDemoApplication.class, args);
 	}
 }
- 
