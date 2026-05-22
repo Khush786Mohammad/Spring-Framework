@@ -9,26 +9,25 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	
+
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
+
 	@Bean
 	public AuthenticationProvider authProvider() {
-		
-		//Dao Authentication Provider is used to help to connect with database to retrieves user details 
+
+		// Dao Authentication Provider is used to help to connect with database to
+		// retrieves user details
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
-		provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+//		provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+		provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
 		return provider;
 	}
 
@@ -45,7 +44,9 @@ public class SecurityConfig {
 
 		// with lambda way
 		http.csrf(csrf -> csrf.disable());
-		http.authorizeHttpRequests(request -> request.anyRequest().authenticated());
+//		http.authorizeHttpRequests(request -> request.anyRequest().authenticated());
+		http.authorizeHttpRequests(request -> request.requestMatchers("/enroll/register").permitAll()
+				.anyRequest().authenticated());
 		http.httpBasic(Customizer.withDefaults());
 		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		return http.build();
