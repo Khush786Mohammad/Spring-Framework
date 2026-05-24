@@ -15,46 +15,46 @@ import jakarta.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/admin")
 public class HelloController {
-	
-	@GetMapping("/csrf-token")
-	public CsrfToken getCsrfToken(HttpServletRequest req, HttpServletResponse res) {
-		CsrfToken token = (CsrfToken) req.getAttribute("_csrf");
-		Cookie cookie = new Cookie("csrf-token", token.getToken());
-		cookie.setMaxAge(60*60);
-		res.addCookie(cookie);
-		return token;
-	}
 
-	@GetMapping("/hello")
-	public String sayHello(HttpServletRequest req) {
-		return "hello your JSESSIONID is: " + req.getSession().getId();
-	}
+    @GetMapping("/csrf-token")
+    public CsrfToken getCsrfToken(HttpServletRequest req, HttpServletResponse res) {
+        CsrfToken token = (CsrfToken) req.getAttribute("_csrf");
+        Cookie cookie = new Cookie("csrf-token", token.getToken());
+        cookie.setMaxAge(60 * 60);
+        res.addCookie(cookie);
+        return token;
+    }
 
-	@GetMapping("/user")
-	public String hiKhush(HttpServletRequest req, HttpServletResponse res, @RequestParam("username") String username) {
-		Cookie cookie = new Cookie("username", username);
-		cookie.setMaxAge(60 * 60 * 1);
-		Cookie cookie2 = new Cookie("password", "admin@123");
-		cookie2.setMaxAge(60);
-		res.addCookie(cookie);
-		res.addCookie(cookie2);
+    @GetMapping("/hello")
+    public String sayHello(HttpServletRequest req) {
+        return "hello your JSESSIONID is: " + req.getSession().getId();
+    }
 
-		return "Khush Mohammad your JSESSIONID is: " + req.getSession().getId();
-	}
+    @GetMapping("/user")
+    public String hiKhush(HttpServletRequest req, HttpServletResponse res, @RequestParam("username") String username) {
+        Cookie cookie = new Cookie("username", username);
+        cookie.setMaxAge(60 * 60 * 1);
+        Cookie cookie2 = new Cookie("password", "admin@123");
+        cookie2.setMaxAge(60);
+        res.addCookie(cookie);
+        res.addCookie(cookie2);
 
-	@GetMapping("/customLogin")
-	public String login(HttpServletRequest req, HttpServletResponse res) {
-		Cookie[] cookies = req.getCookies();
+        return "Khush Mohammad your JSESSIONID is: " + req.getSession().getId();
+    }
 
-		if (cookies == null)
-			return "No Cookies Found";
+    @GetMapping("/customLogin")
+    public String login(HttpServletRequest req, HttpServletResponse res) {
+        Cookie[] cookies = req.getCookies();
 
-		String username = Arrays.stream(cookies).filter(cookie -> cookie.getName().equalsIgnoreCase("username"))
-				.map(Cookie::getValue).findFirst().orElse("Username cookie not found");
+        if (cookies == null)
+            return "No Cookies Found";
 
-		String password = Arrays.stream(cookies).filter(cookie -> cookie.getName().equalsIgnoreCase("password"))
-				.map(Cookie::getValue).findFirst().orElse("Invalid Password");
+        String username = Arrays.stream(cookies).filter(cookie -> cookie.getName().equalsIgnoreCase("username"))
+                .map(Cookie::getValue).findFirst().orElse("Username cookie not found");
 
-		return username + " " + password;
-	}
+        String password = Arrays.stream(cookies).filter(cookie -> cookie.getName().equalsIgnoreCase("password"))
+                .map(Cookie::getValue).findFirst().orElse("Invalid Password");
+
+        return username + " " + password;
+    }
 }
