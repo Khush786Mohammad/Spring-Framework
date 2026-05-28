@@ -97,5 +97,4 @@ public class Task {
 		return "Task [id=" + id + ", title=" + title + ", description=" + description + ", completed=" + completed
 				+ ", crt_dt=" + crt_dt + ", lst_updt_dt=" + lst_updt_dt + "]";
 	}
-
 }
