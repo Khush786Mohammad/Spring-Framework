@@ -4,6 +4,7 @@ import com.khush.todo_api.dto.TaskRequestDto;
 import com.khush.todo_api.entity.Task;
 import com.khush.todo_api.exceptions.TaskNotFoundException;
 import com.khush.todo_api.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class TaskController {
     }
 
     @PostMapping(value = "/tasks", consumes = "application/json")
-    public ResponseEntity<Object> addTask(@RequestBody TaskRequestDto dtoTask) {
+    public ResponseEntity<Object> addTask(@Valid @RequestBody TaskRequestDto dtoTask) {
         Task task = new Task();
 
         task.setTitle(dtoTask.getTitle());
@@ -50,7 +51,7 @@ public class TaskController {
     }
 
     @PutMapping(value = "/tasks", consumes = "application/json")
-    public ResponseEntity<Object> updateTask(@RequestBody TaskRequestDto dtoTask) throws TaskNotFoundException {
+    public ResponseEntity<Object> updateTask(@Valid @RequestBody TaskRequestDto dtoTask) throws TaskNotFoundException {
         Task task = new Task();
 
         task.setId(dtoTask.getId());
