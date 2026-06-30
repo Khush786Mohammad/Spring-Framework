@@ -1,4 +1,4 @@
-package com.springcore.jpa_relationships.entity;
+package com.springcore.jpa_relationships.OneToOne.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

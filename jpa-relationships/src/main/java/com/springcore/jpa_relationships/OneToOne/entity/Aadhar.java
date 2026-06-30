@@ -1,4 +1,4 @@
-package com.springcore.jpa_relationships.entity;
+package com.springcore.jpa_relationships.OneToOne.entity;
 
 import java.time.LocalDate;
 
