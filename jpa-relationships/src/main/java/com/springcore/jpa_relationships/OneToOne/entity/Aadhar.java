@@ -27,9 +27,9 @@ public class Aadhar {
 	private LocalDate issueDate = LocalDate.of(2026, 6, 12);
 
 	@OneToOne
-	@JoinColumn(name="person_id")
+	@JoinColumn(name = "person_id")
 	private Person person;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -64,7 +64,7 @@ public class Aadhar {
 
 	@Override
 	public String toString() {
-		return "Aadhar [id=" + id + ", aadharNumber=" + aadharNumber + ", issueDate=" + issueDate + ", person=" + person
-				+ "]";
+		return "Aadhar [id=" + id + ", aadharNumber=" + aadharNumber + ", issueDate=" + issueDate + "]";
 	}
+
 }

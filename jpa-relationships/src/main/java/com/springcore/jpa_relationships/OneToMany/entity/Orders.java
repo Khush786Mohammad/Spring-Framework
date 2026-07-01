@@ -6,6 +6,7 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,7 +25,7 @@ public class Orders {
 	@Column(name = "customer_name")
 	private String customerName;
 
-	@OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<OrderItems> orderItems = new ArrayList<>();
 
 	public Long getId() {

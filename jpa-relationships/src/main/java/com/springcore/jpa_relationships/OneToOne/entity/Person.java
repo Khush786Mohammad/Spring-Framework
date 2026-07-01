@@ -3,6 +3,7 @@ package com.springcore.jpa_relationships.OneToOne.entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,7 +27,7 @@ public class Person {
 	@Column(name = "city")
 	private String city;
 
-	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Aadhar aadhar;
 
 	public Long getId() {

@@ -62,9 +62,13 @@ public class JpaRelationshipsApplication {
 			orderList.add(orderItems2);
 			orderList.add(orderItems3);
 			
-			orders1.setOrderItems(orderList);
+//			orders1.setOrderItems(orderList);
+//			
+//			service.saveOrderDetails(orders1);
 			
-			service.saveOrderDetails(orders1);
+			Orders orders = service.findOrders(Long.valueOf(1L));
+			System.out.println(orders.getCustomerName());
+			System.out.println(orders.getOrderItems());
 
 		};
 	}

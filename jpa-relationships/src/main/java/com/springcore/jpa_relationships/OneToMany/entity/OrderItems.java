@@ -25,7 +25,7 @@ public class OrderItems {
 	private int quantity;
 
 	@ManyToOne
-	@JoinColumn(name = "Order_id")
+	@JoinColumn(name = "order_id")
 	private Orders orders;
 
 	public Long getId() {
@@ -62,8 +62,6 @@ public class OrderItems {
 
 	@Override
 	public String toString() {
-		return "OrderItems [id=" + id + ", product_name=" + product_name + ", quantity=" + quantity + ", orders="
-				+ orders + "]";
+		return "OrderItems [id=" + id + ", product_name=" + product_name + ", quantity=" + quantity + "]";
 	}
-
 }

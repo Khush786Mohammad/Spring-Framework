@@ -1,5 +1,8 @@
 package com.springcore.jpa_relationships.service;
 
+import java.util.Optional;
+
+import org.hibernate.LazyInitializationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +19,13 @@ public class CustomService {
 
 	@Autowired()
 	private OrderRepository orderRepository;
+	
+	public Person fetchPerson(Long id) {
+		Optional<Person> personData = personRepository.findById(id);
+		if(personData != null && !personData.isEmpty())
+			return personData.get();
+		return null;
+	}
 
 	@Transactional
 	public Person savePerson(Person p) {
@@ -25,5 +35,12 @@ public class CustomService {
 	@Transactional
 	public Orders saveOrderDetails(Orders order) {
 		return orderRepository.save(order);
+	}
+	
+	@Transactional
+	public Orders findOrders(Long id) throws LazyInitializationException{
+		Orders orders = orderRepository.findById(id).orElse(null);
+		orders.getOrderItems().size();
+		return orders;
 	}
 }
