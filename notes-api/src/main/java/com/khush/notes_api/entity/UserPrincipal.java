@@ -1,0 +1,34 @@
+package com.khush.notes_api.entity;
+
+import jakarta.annotation.Nullable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+public class UserPrincipal implements UserDetails {
+    private static final long serialVersionUID = 1L;
+    private final User user;
+
+    public UserPrincipal(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.user.getUsername();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public @Nullable String getPassword() {
+        return this.user.getPassword();
+    }
+}
