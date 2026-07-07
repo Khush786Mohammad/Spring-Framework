@@ -3,7 +3,6 @@ package com.khush.notes_api.controller;
 import com.khush.notes_api.entity.User;
 import com.khush.notes_api.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +18,17 @@ public class RegistrationController {
 
     @GetMapping("/hello")
     public String sayHello(HttpServletRequest request) {
-        User user = new User();
-        System.out.println("Debugger is working");
         return "Hello your JSESSION ID IS: " + request.getSession().getId();
+    }
+
+    @PostMapping("/hello")
+    public String getSessionId(HttpServletRequest request) {
+        return "Your JESSION ID IS: " + request.getSession().getId();
+    }
+
+    @GetMapping("/csrf-token")
+    public CsrfToken getCsrfToken(HttpServletRequest request) {
+        return (CsrfToken) request.getAttribute("_csrf");
     }
 
     @PostMapping("/register")

@@ -14,7 +14,7 @@ public class UserService {
 
     @Transactional
     public User registerUser(User user) {
-//        user.setPassword(encoder.encode(user.getPassword()));
+        user.setPassword(encoder.encode(user.getPassword()));
         return this.repository.save(user);
     }
 

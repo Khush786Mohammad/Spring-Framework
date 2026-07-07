@@ -14,21 +14,21 @@ import lombok.NoArgsConstructor;
 @Table(name = "sec_user_mst")
 public class User {
     @Id
-    @Column(name="id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="username")
+    @Column(name = "username")
     @Size(min = 5)
     @NotNull
     private String username;
 
     @NotNull
     @Size(min = 8)
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
 
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
 }
 
