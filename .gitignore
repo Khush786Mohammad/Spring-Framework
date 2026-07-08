@@ -1,19 +1,72 @@
-/.metadata/
-# Maven
+# Compiled class files
 target/
+build/
+*.class
 
-# Servers (Tomcat / WildFly etc.)
-Servers/
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
 
-# IDEs
-.idea/
-*.iml
-.classpath
-.project
-.settings/
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+gradle-app.setting
+!gradle-wrapper.properties
 
 # Logs
 *.log
+logs/
+spring.log
+
+# IDE - IntelliJ
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# IDE - Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+
+# IDE - VS Code
+.vscode/
+
+# IDE - NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 
 # OS files
 .DS_Store
+Thumbs.db
+
+# Application secrets / environment
+.env
+application-local.properties
+application-local.yml
+*.pem
+*.key
+
+# Spring Boot
+HELP.md
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Docker
+docker-compose.override.yml
