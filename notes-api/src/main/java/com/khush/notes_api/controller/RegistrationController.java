@@ -1,6 +1,7 @@
 package com.khush.notes_api.controller;
 
 import com.khush.notes_api.entity.User;
+import com.khush.notes_api.service.JwtService;
 import com.khush.notes_api.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
     @Autowired
     private UserService service;
+    @Autowired
+    private JwtService jwtService;
 
     @GetMapping("/hello")
     public String sayHello(HttpServletRequest request) {
@@ -35,5 +38,13 @@ public class RegistrationController {
     public ResponseEntity<User> register(@Valid @RequestBody User user) {
         User user1 = this.service.registerUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(user1);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Object> login(@RequestBody User user) {
+        if (user.getUsername() == null || user.getUsername().trim().equalsIgnoreCase(""))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is null");
+        String token = jwtService.generateToken(user.getUsername());
+        return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 }
