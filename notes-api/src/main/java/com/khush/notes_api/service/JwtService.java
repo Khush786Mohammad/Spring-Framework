@@ -1,5 +1,6 @@
 package com.khush.notes_api.service;
 
+import com.khush.notes_api.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -22,11 +23,12 @@ public class JwtService {
     @Value("${spring.security.jwt.expiration_time}")
     private long EXPIRATION_TIME;
 
-    public String generateToken(String username) {
+    public String generateToken(User user) {
         Map<String, Object> extraClaims = new HashMap<String, Object>();
+        extraClaims.put("email", user.getEmail());
         return Jwts.builder()
                 .setClaims(extraClaims)
-                .setSubject(username)
+                .setSubject(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(generateKey(), SignatureAlgorithm.HS256)
@@ -44,7 +46,12 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(generateKey()).build().parseClaimsJws(token).getBody();
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(generateKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     public String extractUsername(String token) {
@@ -63,5 +70,4 @@ public class JwtService {
         final String username = extractUsername(token);
         return (username.equalsIgnoreCase(userDetails.getUsername())) && !isTokenExpired(token);
     }
-
 }

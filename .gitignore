@@ -41,6 +41,7 @@ out/
 .springBeans
 .sts4-cache
 bin/
+.metadata/
 
 # IDE - VS Code
 .vscode/
@@ -71,3 +72,6 @@ HELP.md
 
 # Docker
 docker-compose.override.yml
+
+# Servers
+Servers/

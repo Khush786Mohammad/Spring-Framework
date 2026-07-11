@@ -1,8 +1,8 @@
 package com.khush.notes_api.controller;
 
 import com.khush.notes_api.entity.User;
+import com.khush.notes_api.service.AuthenticationService;
 import com.khush.notes_api.service.JwtService;
-import com.khush.notes_api.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
     @Autowired
     @Qualifier("userService")
-    private UserService service;
+    private AuthenticationService authenticationService;
     @Autowired
     @Qualifier("jwtService")
     private JwtService jwtService;
@@ -29,7 +28,8 @@ public class RegistrationController {
 
     @GetMapping("/hello")
     public String sayHello(HttpServletRequest request) {
-        return "Hello your JSESSION ID IS: " + request.getSession().getId();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return "Hello your JSESSION ID IS: " + request.getSession().getId() + "authentication: " + authentication;
     }
 
     @PostMapping("/hello")
@@ -37,14 +37,9 @@ public class RegistrationController {
         return "Your JESSION ID IS: " + request.getSession().getId();
     }
 
-    @GetMapping("/csrf-token")
-    public CsrfToken getCsrfToken(HttpServletRequest request) {
-        return (CsrfToken) request.getAttribute("_csrf");
-    }
-
     @PostMapping("/register")
     public ResponseEntity<User> register(@Valid @RequestBody User user) {
-        User user1 = this.service.registerUser(user);
+        User user1 = this.authenticationService.registerUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(user1);
     }
 
@@ -52,12 +47,11 @@ public class RegistrationController {
     public ResponseEntity<Object> login(@RequestBody User user) {
         if (user.getUsername() == null || user.getUsername().trim().equalsIgnoreCase(""))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username cannot be empty");
-
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        Authentication authentication = this.authenticationService.isAuthenticatedUser(user);
 
         if (authentication.isAuthenticated()) {
-            String token = jwtService.generateToken(user.getUsername());
+            User userPrincipal = (User) authentication.getPrincipal();
+            String token = jwtService.generateToken(userPrincipal);
             return ResponseEntity.status(HttpStatus.OK).body(token);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Credentials");

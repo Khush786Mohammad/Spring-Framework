@@ -48,6 +48,7 @@ public class SecurityConfig {
                 .anyRequest()
                 .authenticated()
         );
+        //add .httpBasic(Customizer.withDefaults()) for default basic authorization
         http.sessionManagement(
                 session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
