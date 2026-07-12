@@ -27,7 +27,6 @@ public class SecurityConfig {
     private CustomUserDetailsService userDetailsService;
 
     @Autowired
-    @Qualifier("filter")
     private JwtFilter jwtFilter;
 
     @Bean
@@ -46,7 +45,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(request ->
-                request.requestMatchers("/auth/register", "/auth/login")
+                request.requestMatchers("/auth/register", "/auth/login", "/mynotes/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated());

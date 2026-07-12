@@ -19,13 +19,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Component("filter")
+@Component()
 public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private ApplicationContext context;
 
     @Autowired
-    @Qualifier("jwtService")
     private JwtService jwtService;
 
     @Override

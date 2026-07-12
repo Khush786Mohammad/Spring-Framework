@@ -1,6 +1,7 @@
 package com.khush.notes_api.service;
 
 import com.khush.notes_api.entity.User;
+import com.khush.notes_api.entity.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,9 +24,9 @@ public class JwtService {
     @Value("${spring.security.jwt.expiration_time}")
     private long EXPIRATION_TIME;
 
-    public String generateToken(User user) {
+    public String generateToken(UserPrincipal user) {
         Map<String, Object> extraClaims = new HashMap<String, Object>();
-        extraClaims.put("email", user.getEmail());
+        extraClaims.put("email", user.getEmailAddress());
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(user.getUsername())

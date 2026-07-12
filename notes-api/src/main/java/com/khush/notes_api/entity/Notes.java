@@ -31,6 +31,9 @@ public class Notes {
     @Column(name = "lst_updt_dt")
     private LocalDateTime lst_updt_dt;
 
+    @Column(name = "user_id")
+    private Long user_id = 1L;
+
     @PrePersist
     public void onSave() {
         this.crt_dt = LocalDateTime.now();
