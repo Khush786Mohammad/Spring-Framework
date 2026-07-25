@@ -32,4 +32,8 @@ public class UserPrincipal implements UserDetails {
     public String getEmailAddress() {
         return this.user.getEmail();
     }
+
+    public Long getPkId(){
+        return this.user.getId();
+    }
 }

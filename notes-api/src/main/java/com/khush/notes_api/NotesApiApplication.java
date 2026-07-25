@@ -14,7 +14,7 @@ public class NotesApiApplication {
     @Bean
     public CommandLineRunner run() {
         return args -> {
-            System.out.println("Spring boot application startd");
+            System.out.println("Spring boot application started");
         };
     }
 }

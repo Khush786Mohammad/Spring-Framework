@@ -1,6 +1,6 @@
 package com.khush.notes_api.entity;
 
-import jakarta.annotation.PostConstruct;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,15 +31,17 @@ public class Notes {
     @Column(name = "lst_updt_dt")
     private LocalDateTime lst_updt_dt;
 
-    @Column(name = "user_id")
-    private Long user_id = 1L;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @PrePersist
     public void onSave() {
         this.crt_dt = LocalDateTime.now();
     }
 
-    @PostConstruct
+    @PreUpdate
     public void lastUpdatedAt() {
         this.lst_updt_dt = LocalDateTime.now();
     }

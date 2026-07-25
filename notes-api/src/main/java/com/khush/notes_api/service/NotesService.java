@@ -1,7 +1,9 @@
 package com.khush.notes_api.service;
 
+import com.khush.notes_api.dto.NotesResponseDTO;
 import com.khush.notes_api.entity.Notes;
 import com.khush.notes_api.exceptions.NotesNotFoundException;
+import com.khush.notes_api.mapper.NotesMapper;
 import com.khush.notes_api.repository.NotesRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,29 +11,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class NotesService {
     private static final Logger logger = LoggerFactory.getLogger(NotesService.class);
     private final NotesRepository repository;
 
-    public Notes getNotesById(long id) throws NotesNotFoundException {
-        Optional<Notes> note = this.repository.findById(id);
-        if (note.isEmpty())
-            throw new NotesNotFoundException("No Notes Found with id: " + id);
-        return note.get();
+    public NotesResponseDTO getNotesById(long id, long userId) throws NotesNotFoundException {
+        Notes note = this.repository.findByIdAndUserId(id, userId).orElseThrow(() -> new NotesNotFoundException("No Notes Found with id: " + id));
+        return NotesMapper.toDTO(note);
     }
 
-    public List<Notes> getAllNotes() {
-        return this.repository.findAll();
+    public List<NotesResponseDTO> getAllNotes(Long user_id) {
+        List<Notes> notes = this.repository.findByUserId(user_id);
+        List<NotesResponseDTO> notesDtos = new ArrayList<>();
+        for (Notes obj : notes) {
+            notesDtos.add(NotesMapper.toDTO(obj));
+        }
+        return notesDtos;
     }
 
     @Transactional
-    public Notes addNote(Notes note) {
+    public NotesResponseDTO addNote(Notes note) {
         logger.info("Inside the addNote method of NotesService");
-        return this.repository.save(note);
+        Notes data = this.repository.save(note);
+        return NotesMapper.toDTO(data);
     }
 
     @Transactional

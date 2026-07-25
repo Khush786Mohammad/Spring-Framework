@@ -1,22 +1,18 @@
 package com.khush.notes_api.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotesRequestDTO {
+public class NotesResponseDTO {
     private Long id;
-
-    @NotBlank
-    @Size(min = 5)
     private String title;
-
-    @NotBlank
-    @Size(min = 20)
     private String content;
+    private LocalDateTime crt_dt;
+    private LocalDateTime lst_updt_dt;
 }
