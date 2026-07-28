@@ -9,8 +9,8 @@ public class NotesMapper {
         dto.setId(obj.getId());
         dto.setTitle(obj.getTitle());
         dto.setContent(obj.getContent());
-        dto.setCrt_dt(obj.getCrt_dt());
-        dto.setLst_updt_dt(obj.getLst_updt_dt());
+        dto.setCrtDt(obj.getCrtDt());
+        dto.setLstUpdtDt(obj.getLstUpdtDt());
         return dto;
     }
 }

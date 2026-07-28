@@ -26,10 +26,10 @@ public class Notes {
     private String content;
 
     @Column(name = "crt_dt", updatable = false)
-    private LocalDateTime crt_dt;
+    private LocalDateTime crtDt;
 
     @Column(name = "lst_updt_dt")
-    private LocalDateTime lst_updt_dt;
+    private LocalDateTime lstUpdtDt;
 
     @JsonIgnore
     @ManyToOne
@@ -38,11 +38,11 @@ public class Notes {
 
     @PrePersist
     public void onSave() {
-        this.crt_dt = LocalDateTime.now();
+        this.crtDt = LocalDateTime.now();
     }
 
     @PreUpdate
     public void lastUpdatedAt() {
-        this.lst_updt_dt = LocalDateTime.now();
+        this.lstUpdtDt = LocalDateTime.now();
     }
 }

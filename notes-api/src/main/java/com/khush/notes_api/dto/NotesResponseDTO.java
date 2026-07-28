@@ -13,6 +13,6 @@ public class NotesResponseDTO {
     private Long id;
     private String title;
     private String content;
-    private LocalDateTime crt_dt;
-    private LocalDateTime lst_updt_dt;
+    private LocalDateTime crtDt;
+    private LocalDateTime lstUpdtDt;
 }

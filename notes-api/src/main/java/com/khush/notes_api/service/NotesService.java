@@ -8,11 +8,10 @@ import com.khush.notes_api.repository.NotesRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class NotesService {
@@ -24,13 +23,9 @@ public class NotesService {
         return NotesMapper.toDTO(note);
     }
 
-    public List<NotesResponseDTO> getAllNotes(Long user_id) {
-        List<Notes> notes = this.repository.findByUserId(user_id);
-        List<NotesResponseDTO> notesDtos = new ArrayList<>();
-        for (Notes obj : notes) {
-            notesDtos.add(NotesMapper.toDTO(obj));
-        }
-        return notesDtos;
+    public Page<NotesResponseDTO> getAllNotes(Long user_id, Pageable pageable) {
+        Page<Notes> notes = this.repository.findByUserId(user_id, pageable);
+        return notes.map(NotesMapper::toDTO);
     }
 
     @Transactional

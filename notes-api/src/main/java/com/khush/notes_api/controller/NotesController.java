@@ -11,6 +11,10 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,9 +37,15 @@ public class NotesController {
     }
 
     @GetMapping(value = "/notes")
-    public ResponseEntity<List<NotesResponseDTO>> fetchAllNotes() {
+    public ResponseEntity<Page<NotesResponseDTO>> fetchAllNotes(@RequestParam(name = "pageNo", required = false, defaultValue = "0") int pageNo,
+                                                                @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize,
+                                                                @RequestParam(name = "sortField", required = false, defaultValue = "crtDt") String sortField,
+                                                                @RequestParam(name = "order", required = false, defaultValue = "asc") String order
+    ) {
+        Sort sort = order.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         User user = this.authService.getLoggedInUser();
-        List<NotesResponseDTO> notes = this.service.getAllNotes(user.getId());
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+        Page<NotesResponseDTO> notes = this.service.getAllNotes(user.getId(), pageable);
         return ResponseEntity.status(HttpStatus.OK).body(notes);
     }
 
