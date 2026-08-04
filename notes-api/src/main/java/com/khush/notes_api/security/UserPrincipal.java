@@ -1,5 +1,6 @@
-package com.khush.notes_api.entity;
+package com.khush.notes_api.security;
 
+import com.khush.notes_api.entity.User;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

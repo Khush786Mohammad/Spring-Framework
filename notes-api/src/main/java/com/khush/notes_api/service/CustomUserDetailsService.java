@@ -1,7 +1,7 @@
 package com.khush.notes_api.service;
 
 import com.khush.notes_api.entity.User;
-import com.khush.notes_api.entity.UserPrincipal;
+import com.khush.notes_api.security.UserPrincipal;
 import com.khush.notes_api.repository.UserRepository;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;

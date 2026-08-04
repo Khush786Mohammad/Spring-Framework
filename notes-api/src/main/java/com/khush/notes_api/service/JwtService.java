@@ -1,6 +1,6 @@
 package com.khush.notes_api.service;
 
-import com.khush.notes_api.entity.UserPrincipal;
+import com.khush.notes_api.security.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
