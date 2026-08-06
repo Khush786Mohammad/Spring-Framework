@@ -5,6 +5,8 @@ import com.khush.notes_api.security.UserPrincipal;
 import com.khush.notes_api.service.AuthenticationService;
 import com.khush.notes_api.service.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,11 +23,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
-@Tag(name = "Authentication", description = "Operation related to User Registration and Login")
+@Tag(name = "Authentication", description = "User Registration and Login")
 public class AuthenticationController {
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+    private static final String ClassName = "AuthenticationController Class";
+
     @Autowired()
     @Qualifier("userService")
     private AuthenticationService authenticationService;
@@ -36,29 +43,44 @@ public class AuthenticationController {
 
     @Operation(summary = "User Registration", description = "To register a user")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "User Register Successfully"),
+            @ApiResponse(responseCode = "201", description = "User Register Successfully", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = User.class))
+            }),
             @ApiResponse(responseCode = "400", description = "Bad Request, invalid/bad data is passed"),
+            @ApiResponse()
     })
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@Valid @RequestBody User user) {
-        User newUser = this.authenticationService.registerUser(user);
+    @PostMapping(value = "/register", consumes = "application/json")
+    public ResponseEntity<User> register(@Valid @RequestBody final User user) {
+        logger.info("Inside the registration method of {}", ClassName);
+        final User newUser = this.authenticationService.registerUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
+    @Operation(summary = "User Authentication",
+            description = "Used to Authenticate User and returns a " +
+                    "Authentication Token when user is authenticated successfully.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "User Authenticated successfully."),
+            @ApiResponse(responseCode = "400", description = "Bad Credentials")
+    })
     @PostMapping(value = "/login", consumes = "application/json")
-    public ResponseEntity<Object> login(@RequestBody User user) {
-        logger.info("Inside the login method");
+    public ResponseEntity<Object> login(@RequestBody final User user) {
+        logger.info("Inside the login method of {}", ClassName);
         if (user.getUsername() == null || user.getUsername().trim().equalsIgnoreCase(""))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username cannot be empty");
-        Authentication authentication = this.authenticationService.isAuthenticatedUser(user);
+        final Authentication authentication = this.authenticationService.isAuthenticatedUser(user);
 
         if (authentication.isAuthenticated()) {
-            UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+            logger.info("Inside login method of {}, user is authenticated successfully", ClassName);
+            final UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
             assert userPrincipal != null;
-            String token = jwtService.generateToken(userPrincipal);
-            return ResponseEntity.status(HttpStatus.OK).body(token);
+            final String token = jwtService.generateToken(userPrincipal);
+            final Map<String, String> resMap = new HashMap<>();
+            resMap.put("token", token);
+            return ResponseEntity.status(HttpStatus.OK).body(resMap);
         }
-        logger.info("At the end of login method");
+        logger.info("End of login method");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Credentials");
     }
 }

@@ -7,6 +7,11 @@ import com.khush.notes_api.entity.User;
 import com.khush.notes_api.exceptions.NotesNotFoundException;
 import com.khush.notes_api.service.AuthenticationService;
 import com.khush.notes_api.service.NotesService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -22,73 +27,108 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/mynotes")
-@Tag(name="Notes", description = "Operations related to user notes")
+@Tag(name = "Notes", description = "Manage Authenticated user's notes")
 public class NotesController {
     private static final Logger logger = LoggerFactory.getLogger(NotesController.class);
+    private static final String ClassName = "NotesController Class";
+
     private final NotesService service;
     private final AuthenticationService authService;
 
+    @Operation(summary = "Fetch specific notes", description = "Use to fetch particular note's id.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Notes with note's id fetch successfully.",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = NotesResponseDTO.class))}
+            ),
+            @ApiResponse(responseCode = "404", description = "Failed to fetch notes with given note's id.")
+    })
     @GetMapping(value = "/notes/{id}")
-    public ResponseEntity<NotesResponseDTO> getNote(@PathVariable long id) throws NotesNotFoundException {
-        logger.info("Inside the get note method.");
-        User user = this.authService.getLoggedInUser();
-        NotesResponseDTO note = this.service.getNotesById(id, user.getId());
+    public ResponseEntity<NotesResponseDTO> getNote(@PathVariable final long id) throws NotesNotFoundException {
+        logger.info("Inside getNote method of {}", ClassName);
+        final User user = this.authService.getLoggedInUser();
+        final NotesResponseDTO note = this.service.getNotesById(id, user.getId());
         return ResponseEntity.status(HttpStatus.OK).body(note);
     }
 
+    @Operation(summary = "Fetch All Notes", description = "Fetch logged in user all notes.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "All Notes Fetch Successfully."),
+            @ApiResponse(responseCode = "404", description = "Something went wrong.")
+    })
     @GetMapping(value = "/notes")
-    public ResponseEntity<Page<NotesResponseDTO>> fetchAllNotes(@RequestParam(name = "pageNo", required = false, defaultValue = "0") int pageNo,
-                                                                @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize,
-                                                                @RequestParam(name = "sortField", required = false, defaultValue = "crtDt") String sortField,
-                                                                @RequestParam(name = "order", required = false, defaultValue = "asc") String order
+    public ResponseEntity<Page<NotesResponseDTO>> fetchAllNotes(
+            @RequestParam(name = "pageNo", required = false, defaultValue = "0") final int pageNo,
+            @RequestParam(name = "pageSize", required = false, defaultValue = "10") final int pageSize,
+            @RequestParam(name = "sortField", required = false, defaultValue = "crtDt") final String sortField,
+            @RequestParam(name = "order", required = false, defaultValue = "asc") final String order
     ) {
-        Sort sort = order.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
-        User user = this.authService.getLoggedInUser();
-        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
-        Page<NotesResponseDTO> notes = this.service.getAllNotes(user.getId(), pageable);
+        logger.info("Inside the fetchAllNotes endpoint method of {}", ClassName);
+        final Sort sort = order.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        final User user = this.authService.getLoggedInUser();
+        final Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+        final Page<NotesResponseDTO> notes = this.service.getAllNotes(user.getId(), pageable);
+        logger.info("After the service call for getAllNotes {}", ClassName);
         return ResponseEntity.status(HttpStatus.OK).body(notes);
     }
 
+    @Operation(summary = "Create new Notes", description = "Created new notes for logged in user")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Notes created successfully."),
+            @ApiResponse(responseCode = "404", description = "Failed to create notes")
+    })
     @PostMapping(value = "/notes", consumes = "application/json")
-    public ResponseEntity<NotesResponseDTO> createNewNotes(@Valid @RequestBody NotesRequestDTO notesDto) {
-        logger.info("Inside the Create new Notes of NotesController");
-        Notes notes = new Notes();
+    public ResponseEntity<NotesResponseDTO> createNewNotes(@Valid @RequestBody final NotesRequestDTO notesDto) {
+        logger.info("Inside the createNewNotes endpoint of {}", ClassName);
+        final Notes notes = new Notes();
         notes.setTitle(notesDto.getTitle());
         notes.setContent(notesDto.getContent());
 
-        User user = this.authService.getLoggedInUser();
+        final User user = this.authService.getLoggedInUser();
         notes.setUser(user);
-        NotesResponseDTO newNote = this.service.addNote(notes);
+        final NotesResponseDTO newNote = this.service.addNote(notes);
+        logger.info("After service method called in {}", ClassName);
         return ResponseEntity.status(HttpStatus.CREATED).body(newNote);
     }
 
+    @Operation(summary = "Update Notes", description = "Used to update/modify user's created notes.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Notes updated successfully."),
+            @ApiResponse(responseCode = "400", description = "Bad Request")
+    })
     @PutMapping(value = "/notes")
-    public ResponseEntity<String> updateNote(@RequestBody NotesRequestDTO notes) throws NotesNotFoundException {
-        logger.info("Inside the Update method of Notes Controller");
-        User user = this.authService.getLoggedInUser();
+    public ResponseEntity<String> updateNote(@RequestBody final NotesRequestDTO notes) throws NotesNotFoundException {
+        logger.info("Inside the updateNote method of {}", ClassName);
+        final User user = this.authService.getLoggedInUser();
         NotesResponseDTO note1 = this.service.getNotesById(notes.getId(), user.getId());
-        assert note1 != null;
-        Notes updatedNote = new Notes();
+        logger.info("Notes with id: {} is: {}", note1.getId(), note1);
+        final Notes updatedNote = new Notes();
         updatedNote.setId(notes.getId());
         updatedNote.setTitle(notes.getTitle());
         updatedNote.setContent(notes.getContent());
         updatedNote.setUser(user);
         this.service.updateNotes(updatedNote);
-        logger.info("End of Update method of Notes Controller");
+        logger.info("End of Update method of {}", ClassName);
         return ResponseEntity.status(HttpStatus.OK).body("Notes Updated Successfully");
     }
 
+    @Operation(summary = "Delete Notes", description = "Delete user's specific notes")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Notes with given id deleted successfully."),
+            @ApiResponse(responseCode = "404", description = "Notes doesn't exists")
+    })
     @DeleteMapping(value = "/notes/{id}")
-    public ResponseEntity<Object> deleteNotes(@PathVariable Long id) throws NotesNotFoundException {
-        User user = this.authService.getLoggedInUser();
-        NotesResponseDTO notes = this.service.getNotesById(id, user.getId());
+    public ResponseEntity<String> deleteNotes(@PathVariable final Long id) throws NotesNotFoundException {
+        logger.info("Inside the deleteNotes endpoint method of {}", ClassName);
+        final User user = this.authService.getLoggedInUser();
+        final NotesResponseDTO notes = this.service.getNotesById(id, user.getId());
         logger.info("Notes data with id: {}", notes);
         this.service.deleteNotesById(id);
+        logger.info("After the notes delete method");
         return ResponseEntity.status(HttpStatus.OK).body("Note deleted successfully.");
     }
 
     @Autowired
-    public NotesController(NotesService service1, AuthenticationService authenticationService) {
+    public NotesController(final NotesService service1, final AuthenticationService authenticationService) {
         this.service = service1;
         this.authService = authenticationService;
     }

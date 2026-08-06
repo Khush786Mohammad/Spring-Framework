@@ -17,11 +17,12 @@ import java.util.Map;
 @Order(1)
 public class GlobalExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private static final String ClassName = "GlobalExceptionHandler Class";
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidException(MethodArgumentNotValidException exception) {
-        logger.info("Inside the handleValidException of GlobalExceptionHandler class");
-        Map<String, String> message = new HashMap<>();
+    public ResponseEntity<Map<String, String>> handleValidException(final MethodArgumentNotValidException exception) {
+        logger.info("Inside the handleValidException of {}", ClassName);
+        final Map<String, String> message = new HashMap<>();
         exception
                 .getBindingResult()
                 .getFieldErrors()
@@ -31,10 +32,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NotesNotFoundException.class)
-    public ResponseEntity<Map<String, String>> notesNotFoundException(NotesNotFoundException exception) {
-        logger.info("Inside the notesNotFoundException of GlobalExceptionHandler class");
+    public ResponseEntity<Map<String, String>> notesNotFoundException(final NotesNotFoundException exception) {
+        logger.info("Inside the notesNotFoundException of {}", ClassName);
         logger.error("Failed to find the notes with requested id");
-        Map<String, String> handler = new HashMap<>();
+        final Map<String, String> handler = new HashMap<>();
         handler.put("error", exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(handler);
     }
