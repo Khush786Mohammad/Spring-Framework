@@ -24,7 +24,7 @@ public class JwtService {
     private long EXPIRATION_TIME;
 
     public String generateToken(UserPrincipal user) {
-        Map<String, Object> extraClaims = new HashMap<String, Object>();
+        final Map<String, Object> extraClaims = new HashMap<String, Object>();
         extraClaims.put("email", user.getEmailAddress());
         return Jwts.builder()
                 .setClaims(extraClaims)
@@ -40,7 +40,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keys);
     }
 
-    private <T> T extractClaims(String token, Function<Claims, T> claimResolver) {
+    private <T> T extractClaims(final String token, Function<Claims, T> claimResolver) {
         final Claims claims = extractAllClaims(token);
         return claimResolver.apply(claims);
     }
@@ -54,19 +54,19 @@ public class JwtService {
                 .getBody();
     }
 
-    public String extractUsername(String token) {
+    public String extractUsername(final String token) {
         return extractClaims(token, Claims::getSubject);
     }
 
-    public Date extractExpiration(String token) {
+    public Date extractExpiration(final String token) {
         return extractClaims(token, Claims::getExpiration);
     }
 
-    public boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(final String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    public boolean validateToken(String token, UserDetails userDetails) {
+    public boolean validateToken(final String token, final UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equalsIgnoreCase(userDetails.getUsername())) && !isTokenExpired(token);
     }

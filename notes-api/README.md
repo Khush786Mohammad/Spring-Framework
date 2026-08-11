@@ -23,7 +23,7 @@ cd notes-api
 ./mvnw spring-boot:run
 ```
 
-The API will start on `http://localhost:8080` by default.
+The API will start on `http://localhost:8080` by default with a context path `/notes-api/v1`.
 
 ### Build
 
@@ -42,21 +42,31 @@ The API will start on `http://localhost:8080` by default.
 Configuration lives in `src/main/resources/application.properties`. Key settings:
 
 ```properties
+spring.application.name = notes-api
 server.port=8080
-spring.datasource.url=jdbc:mysql://localhost:3306/notesDB
+server.servlet.context-path = /notes-api/v1
+
+spring.datasource.name=datasource
+spring.datasource.url=jdbc:database://localhost:3306/notesDB
 spring.datasource.username=your_username
 spring.datasource.password=your_password
+
+spring.jpa.hibernate.ddl-auto = update
+spring.jpa.show-sql = true
+
+spring.security.jwt.securitykey = ###
+spring.security.expiration_time = time in milliseconds
 ```
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/notes` | Get all notes |
-| GET | `/api/notes/{id}` | Get a note by ID |
-| POST | `/api/notes` | Create a new note |
-| PUT | `/api/notes/{id}` | Update an existing note |
-| DELETE | `/api/notes/{id}` | Delete a note |
+| Method | Endpoint          | Description             |
+| ------ | ----------------- | ----------------------- |
+| GET    | `/api/notes`      | Get all notes           |
+| GET    | `/api/notes/{id}` | Get a note by ID        |
+| POST   | `/api/notes`      | Create a new note       |
+| PUT    | `/api/notes/{id}` | Update an existing note |
+| DELETE | `/api/notes/{id}` | Delete a note           |
 
 ### Sample Request
 

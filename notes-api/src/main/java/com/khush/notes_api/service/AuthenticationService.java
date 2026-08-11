@@ -1,8 +1,8 @@
 package com.khush.notes_api.service;
 
 import com.khush.notes_api.entity.User;
-import com.khush.notes_api.security.UserPrincipal;
 import com.khush.notes_api.repository.UserRepository;
+import com.khush.notes_api.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,20 +19,20 @@ public class AuthenticationService {
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     @Transactional
-    public User registerUser(User user) {
+    public User registerUser(final User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         return this.repository.save(user);
     }
 
-    public Authentication isAuthenticatedUser(User user) {
+    public Authentication isAuthenticatedUser(final User user) {
         return authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
     }
 
     public User getLoggedInUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         assert authentication != null;
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        final UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         assert userPrincipal != null;
         User user = new User();
         user.setId(userPrincipal.getPkId());
@@ -42,7 +42,7 @@ public class AuthenticationService {
     }
 
     @Autowired
-    public AuthenticationService(UserRepository repo, AuthenticationManager authenticationManager) {
+    public AuthenticationService(final UserRepository repo, final AuthenticationManager authenticationManager) {
         this.repository = repo;
         this.authenticationManager = authenticationManager;
     }

@@ -1,5 +1,6 @@
 package com.khush.notes_api.mapper;
 
+import com.khush.notes_api.dto.NotesRequestDTO;
 import com.khush.notes_api.dto.NotesResponseDTO;
 import com.khush.notes_api.entity.Notes;
 
@@ -12,5 +13,13 @@ public class NotesMapper {
         dto.setCrtDt(obj.getCrtDt());
         dto.setLstUpdtDt(obj.getLstUpdtDt());
         return dto;
+    }
+
+    public static Notes toNotesObject(NotesRequestDTO dto){
+        Notes notes = new Notes();
+        notes.setId(dto.getId());
+        notes.setTitle(dto.getTitle());
+        notes.setContent(dto.getContent());
+        return notes;
     }
 }

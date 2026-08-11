@@ -6,7 +6,7 @@ public class NotesNotFoundException extends Exception {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public NotesNotFoundException(String message) {
+    public NotesNotFoundException(final String message) {
         super(message);
     }
 }

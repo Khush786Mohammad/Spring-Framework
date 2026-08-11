@@ -1,6 +1,8 @@
 package com.khush.notes_api.controller;
 
+import com.khush.notes_api.dto.UserResponseDTO;
 import com.khush.notes_api.entity.User;
+import com.khush.notes_api.mapper.UserMapper;
 import com.khush.notes_api.security.UserPrincipal;
 import com.khush.notes_api.service.AuthenticationService;
 import com.khush.notes_api.service.JwtService;
@@ -51,10 +53,11 @@ public class AuthenticationController {
             @ApiResponse()
     })
     @PostMapping(value = "/register", consumes = "application/json")
-    public ResponseEntity<User> register(@Valid @RequestBody final User user) {
+    public ResponseEntity<UserResponseDTO> register(@Valid @RequestBody final User user) {
         logger.info("Inside the registration method of {}", ClassName);
         final User newUser = this.authenticationService.registerUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+        UserResponseDTO crtUser = UserMapper.userResponseDTO(newUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(crtUser);
     }
 
     @Operation(summary = "User Authentication",

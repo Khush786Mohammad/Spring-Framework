@@ -18,35 +18,35 @@ public class NotesService {
     private static final Logger logger = LoggerFactory.getLogger(NotesService.class);
     private final NotesRepository repository;
 
-    public NotesResponseDTO getNotesById(long id, long userId) throws NotesNotFoundException {
-        Notes note = this.repository.findByIdAndUserId(id, userId).orElseThrow(() -> new NotesNotFoundException("No Notes Found with id: " + id));
+    public NotesResponseDTO getNotesById(final long id, final long userId) throws NotesNotFoundException {
+        final Notes note = this.repository.findByIdAndUserId(id, userId).orElseThrow(() -> new NotesNotFoundException("No Notes Found with id: " + id));
         return NotesMapper.toDTO(note);
     }
 
-    public Page<NotesResponseDTO> getAllNotes(Long user_id, Pageable pageable) {
-        Page<Notes> notes = this.repository.findByUserId(user_id, pageable);
+    public Page<NotesResponseDTO> getAllNotes(final Long user_id, final Pageable pageable) {
+        final Page<Notes> notes = this.repository.findByUserId(user_id, pageable);
         return notes.map(NotesMapper::toDTO);
     }
 
     @Transactional
-    public NotesResponseDTO addNote(Notes note) {
+    public NotesResponseDTO addNote(final Notes note) {
         logger.info("Inside the addNote method of NotesService");
-        Notes data = this.repository.save(note);
+        final Notes data = this.repository.save(note);
         return NotesMapper.toDTO(data);
     }
 
     @Transactional
-    public void updateNotes(Notes notes) {
+    public void updateNotes(final Notes notes) {
         this.repository.save(notes);
     }
 
     @Transactional
-    public void deleteNotesById(Long id) {
+    public void deleteNotesById(final Long id) {
         this.repository.deleteById(id);
     }
 
     @Autowired
-    public NotesService(NotesRepository repository) {
+    public NotesService(final NotesRepository repository) {
         this.repository = repository;
     }
 }
