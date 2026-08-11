@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/mynotes")
 @Tag(name = "Notes", description = "Manage Authenticated user's notes")
+@SecurityRequirement(name = "bearerAuth")
 public class NotesController {
     private static final Logger logger = LoggerFactory.getLogger(NotesController.class);
     private static final String ClassName = "NotesController Class";
